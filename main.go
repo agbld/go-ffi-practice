@@ -8,13 +8,19 @@ package main
 */
 import "C"
 import (
+    "os"
     "fmt"
     "unsafe"
+    "strconv"
 )
 
 func main() {
+    // get input from cli as shift value
+    input := os.Args[1]
+    shift, _ := strconv.Atoi(os.Args[2])
+
     // Convert Go strings to C strings
-    input := "Hello, world!"
+    // input := "Hello, world!"
     fmt.Println("Input:", input)
     cInput := C.CString(input)
     defer C.free(unsafe.Pointer(cInput))
@@ -24,6 +30,7 @@ func main() {
     cEncodedPtr := (*C.char)(unsafe.Pointer(&cEncoded[0]))
 
     // Call C function to encode
+    C.set_shift(C.int(shift))
     C.encode(cInput, cEncodedPtr)
 
     // Convert encoded C string back to Go string
