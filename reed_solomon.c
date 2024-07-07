@@ -141,10 +141,10 @@ void init_dec(){//initialize skewVec[], B[], log_walsh[]
 	walsh(log_walsh, Size);
 }
 
-void encodeL(GFSymbol* data, int k, GFSymbol* codeword){//Encoding alg for k/n<0.5: message is a power of two
+void encodeL(GFSymbol* data, int k, int n, GFSymbol* codeword){//Encoding alg for k/n<0.5: message is a power of two
 	memcpy(codeword, data, sizeof(GFSymbol)*k);
 	IFLT(codeword, k, 0);
-	for(int i=k; i<Size; i+=k){
+	for(int i=k; i<n; i+=k){
 		memcpy(&codeword[i], codeword, sizeof(GFSymbol)*k);
 		FLT(&codeword[i], k, i);
 	}
@@ -166,18 +166,18 @@ void encodeH(GFSymbol* data, int k, GFSymbol* parity, GFSymbol* mem){//Encoding 
 	return;
 }
 
-void decode_init(_Bool* erasure, GFSymbol* log_walsh2){//Compute the evaluations of the error locator polynomial
-	for(int i=0; i<Size; i++)
+void decode_init(_Bool* erasure, int n, GFSymbol* log_walsh2){//Compute the evaluations of the error locator polynomial
+	for(int i=0; i<n; i++)
 		log_walsh2[i] = erasure[i];
-	walsh(log_walsh2, Size);
-	for (int i=0; i<Size; i++)
+	walsh(log_walsh2, n);
+	for (int i=0; i<n; i++)
 		log_walsh2[i] = (unsigned long)log_walsh2[i]*log_walsh[i]%mod;
-	walsh(log_walsh2,Size);
-	for (int i=0; i<Size; i++)
+	walsh(log_walsh2,n);
+	for (int i=0; i<n; i++)
 		if(erasure[i]) log_walsh2[i] = mod-log_walsh2[i];
 }
 
-void decode_main(GFSymbol* codeword, _Bool* erasure, GFSymbol* log_walsh2){
+void decode_main(GFSymbol* codeword, _Bool* erauhjgfttttttttttttttttttt0p[oQsure, GFSymbol* log_walsh2){
 	int k2 = Size;//k2 can be replaced with k
 	for (int i=0; i<Size; i++)
 		codeword[i] = erasure[i]? 0 : mulE(codeword[i], log_walsh2[i]);
