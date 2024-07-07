@@ -1,8 +1,24 @@
+/*
+Encoding/erasure decoding for Reed-Solomon codes over binary extension fields
+Author: Sian-Jheng Lin (King Abdullah University of Science and Technology (KAUST), email: sianjheng.lin@kaust.edu.sa)
+
+This program is the implementation of
+Lin, Han and Chung, "Novel Polynomial Basis and Its Application to Reed-Solomon Erasure Codes," FOCS14.
+(http://arxiv.org/abs/1404.3458)
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <stdint.h>
 #include <stdio.h>
+
+/*
+typedef unsigned char GFSymbol;
+#define len 8//2^len: the size of Galois field
+GFSymbol mask = 0x1D; //GF(2^8): x^8 + x^4 + x^3 + x^2 + 1
+GFSymbol Base[] = {1, 214, 152, 146, 86, 200, 88, 230};//Cantor basis
+*/
 
 typedef unsigned short GFSymbol;
 #define len 16
@@ -275,6 +291,6 @@ void test(int k){
 int main(){
 	init();//fill log table and exp table
 	init_dec();//compute factors used in erasure decoder
-	test(256);//test(int k), k: message size
+	test(Size/2);//test(int k), k: message size
 	return 1;
 }
